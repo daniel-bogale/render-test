@@ -1,1 +1,10 @@
 GET http://localhost:3001/api/notes
+
+###
+PUT http://localhost:3001/api/notes/2
+
+Content-Type: application/json
+{
+    "content": "GET and POST are the most important methods of HTTP protocol",
+    "important": false
+}

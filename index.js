@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+
+// app.use(express.static("dist"));
+
 app.use(express.json());
 
 app.use(cors());
@@ -80,6 +83,21 @@ app.delete("/api/notes/:id", (request, response) => {
   const id = Number(request.params.id);
   notes = notes.filter((note) => note.id !== id);
   response.status(204).end();
+});
+
+app.put("/api/notes/:id", (request, response) => {
+  const id = Number(request.params.id);
+  const noteIndex = notes.findIndex((note) => note.id === id);
+
+  console.log("updating");
+
+  if (noteIndex !== -1) {
+    const content = request.body;
+    notes[noteIndex] = content;
+    response.json(content);
+  } else {
+    response.status(204).json({ error: "Note not found" });
+  }
 });
 
 const PORT = process.env.PORT || 3001;
