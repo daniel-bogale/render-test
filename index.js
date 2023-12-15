@@ -3,7 +3,7 @@ const cors = require("cors");
 
 const app = express();
 
-// app.use(express.static("dist"));
+app.use(express.static("dist"));
 
 app.use(express.json());
 
@@ -92,8 +92,10 @@ app.put("/api/notes/:id", (request, response) => {
   console.log("updating");
 
   if (noteIndex !== -1) {
-    const content = request.body;
-    notes[noteIndex] = content;
+    const { content, important } = request.body;
+    notes[noteIndex].content = content;
+    notes[noteIndex].important = important;
+
     response.json(content);
   } else {
     response.status(204).json({ error: "Note not found" });
